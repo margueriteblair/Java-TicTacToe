@@ -27,16 +27,36 @@ public class Main {
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter your placement: 1-9");
             int position = scan.nextInt();
+
+            while(playerPositions.contains(position) || cpuPositions.contains(playerPositions)) {
+                System.out.println("Position taken! Enter a correct position.");
+                position = scan.nextInt();
+            }
+
+            String winner = checkWinner();
+            if (winner.length() > 0 ) {
+                System.out.println(result);
+                break;
+            }
+
             System.out.println(position);
 
             placePiece(gameBoard, position, "player");
 
             Random random = new Random();
             int cpuPos = random.nextInt(9) + 1;
+
+            while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)) {
+                cpuPos = random.nextInt(9) + 1;
+            }
+
             placePiece(gameBoard, cpuPos, "comp");
             printGameBoard(gameBoard);
-            String winner = checkWinner();
-            System.out.println(winner);
+            winner = checkWinner();
+            if (winner.length() > 0) {
+                System.out.println(winner);
+                break;
+            }
         }
     }
 
