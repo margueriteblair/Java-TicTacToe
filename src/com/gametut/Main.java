@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -34,6 +35,8 @@ public class Main {
             int cpuPos = random.nextInt(9) + 1;
             placePiece(gameBoard, cpuPos, "comp");
             printGameBoard(gameBoard);
+            String winner = checkWinner();
+            System.out.println(winner);
         }
     }
 
@@ -50,8 +53,10 @@ public class Main {
         char symbol = 'X';
         if (user.equals("player")) {
             symbol = 'X';
+            playerPositions.add(position);
         } else if (user.equals("comp")) {
             symbol = '0';
+            cpuPositions.add(position);
         }
 
 
@@ -108,7 +113,15 @@ public class Main {
         winningConditions.add(cross1);
         winningConditions.add(cross2);
 
-
+        for (List list : winningConditions) {
+            if (playerPositions.containsAll(list)) {
+                return "Congratulations, you've won!";
+            } else if (cpuPositions.containsAll(list)){
+                return "So sorry, computer has won!";
+            } else if (playerPositions.size() + cpuPositions.size() == 9) {
+                return "CAT!";
+            }
+        }
         return "";
     }
 
